@@ -55,3 +55,23 @@ th {
   font-weight: bold;
   background-color: #FCFCFC;
 }
+
+span.xmlelement {
+  font-family: 'Courier New', monospace;  
+}
+
+span.xmlelement:before {
+  content: '<';
+}
+
+span.xmlelement:after {
+  content: '>';
+}
+
+span.xmlatt {
+  font-family: 'Courier New', monospace;  
+}
+
+span.xmlatt:before {
+  content: '@';
+}

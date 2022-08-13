@@ -23,11 +23,11 @@ function dm:ditaMigrationRoot(
   return
   <html>
     <head>
-      <title>DITA Migration Tool</title>
+      <title>DITA Migration Analysis Tool</title>
       <link href="/static/dita-migration.css" type="text/css" rel="stylesheet"/>
     </head>
     <body>
-      <h1>DITA Migration Tool</h1>
+      <h1>DITA Migration Analysis Tool</h1>
       <div>{
         if (empty($selectedDatabase))
         then dm:handleNoSelectedDatabase()
@@ -50,6 +50,7 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
   let $maps := migration:getMaps($database)
   return
   <div class="report-container">
+    <h3>General Analysis</h3>
     <table class="report-table">
       <thead>
         <tr>
@@ -68,6 +69,246 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
           <td>Total Topics</td>
           <td>{count($topics)}</td>
           <td>{$topics ! name(.) => distinct-values() => sort() => string-join(', ')}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Topic Migrations</h3>
+    <table class="report-table">
+      <thead>
+        <tr>
+         <th>Item</th>
+         <th>Value</th>
+         <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="xmlelement">titlealts</span> in topics</td>
+          <td>{count($topics//titlealts)}</td>
+          <td><span class="xmlelement">titlealts</span> has been removed. 
+          Move alternative titles into the topic prolog.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">hazardstatement</span> with with <span class="xmlelement">hazardsymbol</span></td>
+          <td>{count($topics//hazardstatement[.//hazardsymbol])}</td>
+          <td>Move <span class="xmlelement">hazardsymbol</span> into <span class="xmlelement">messagepanel</span> .</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">longquote</span> with removed linking attributes</td>
+          <td>{count($topics//longquote[@href | @scope | @format])}</td>
+          <td>Remove <span class="xmlatt">href</span>, <span class="xmlatt">scope</span>, and <span class="xmlatt">format</span> attributes.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">index-base</span></td>
+          <td>{count($topics//index-base)}</td>
+          <td>Remove <span class="xmlelement">index-base</span> elements.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">index-sort-as</span></td>
+          <td>{count($topics//index-sort-as)}</td>
+          <td>Replace <span class="xmlelement">index-sort-as</span> with <span class="xmlelement">sort-as</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">spectitle</span></td>
+          <td>{count($topics//@spectitle)}</td>
+          <td>Replace <span class="xmlatt">spectitle</span> with appropriate <span class="xmlatt">outputclass</span> value  .</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">stentry</span> with <span class="xmlatt">specentry</span></td>
+          <td>{count($topics//stentry[@specentry])}</td>
+          <td>Replace <span class="xmlatt">specentry</span> with appropriate <span class="xmlatt">outputclass</span> value  .</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">substeps</span> elements</td>
+          <td>{count($topics//substeps)}</td>
+          <td>Replace <span class="xmlelement">substeps</span> with <span class="xmlelement">steps</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">object</span> with removed object attributes</td>
+          <td>{count($topics//object[@declare | @classid | @classidkeyref | @codebase | @codebasekeyref | 
+                                     @archive | @archivekeyrefs | @standby])}</td>
+          <td>Remove the attributes.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">param</span> with removed param attributes</td>
+          <td>{count($topics//object/param[@type | @valuetype])}</td>
+          <td>Remove the attributes.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">longquoteref</span></td>
+          <td>{count($topics//longquoteref)}</td>
+          <td>Replace with <span class="xmlelement">xref</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">sectiondiv</span></td>
+          <td>{count($topics//sectiondiv)}</td>
+          <td>Replace with <span class="xmlelement">div</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">linktext</span></td>
+          <td>{count($topics//linktext)}</td>
+          <td>Replace with <span class="xmlelement">keytext</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">boolean</span></td>
+          <td>{count($topics//boolean)}</td>
+          <td>Replace with appropriate text or other element.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">data-about</span></td>
+          <td>{count($topics//data-about)}</td>
+          <td>Remove element or replace with appropriate use of <span class="xmlelement">data</span></td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">indextermref</span></td>
+          <td>{count($topics//indextermref)}</td>
+          <td>Remove element.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">itemgroup</span></td>
+          <td>{count($topics//itemgroup)}</td>
+          <td>Split containing list into two lists.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">alt</span></td>
+          <td>{count($topics//image[@alt])}</td>
+          <td>Replace with <span class="xmlelement">alt</span> within <span class="xmlelement">image</span> or 
+          <span class="xmlelement">keytext</span> within <span class="xmlelement">keydef</span> for the image&apos;s key.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">longdescref</span></td>
+          <td>{count($topics//image[@longdescref])}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">collectiontype</span> of "tree"</td>
+          <td>{count($topics//*[@collectiontype eq 'tree'])}</td>
+          <td>Remove the attribute or select a different value.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">print</span></td>
+          <td>{count($topics//@print)}</td>
+          <td>Replace with <span class="xmlatt">deliveryTarget</span> with appropriate values (i.e., "pdf").</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">query</span></td>
+          <td>{count($topics//@query)}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">type</span> on  <span class="xmlelement">lq</span></td>
+          <td>{count($topics//lq[@type])}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">role</span> "sample" or "external"</td>
+          <td>{count($topics//@role[. = ('sample', 'external')])}</td>
+          <td>Remove the attribute or select a different role.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Map Migrations</h3>
+    <table class="report-table">
+      <thead>
+        <tr>
+         <th>Item</th>
+         <th>Value</th>
+         <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="xmlelement">titlealts</span></td>
+          <td>{count($maps//titlealts)}</td>
+          <td><span class="xmlelement">titlealts</span> has been removed. 
+          Move alternative titles into <span class="xmlelement">topicmeta</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">navtitle</span></td>
+          <td>{count($maps//@navtitle)}</td>
+          <td>Replace with <span class="xmlelement">navtitle</span> in <span class="xmlelement">topicmeta</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">title</span></td>
+          <td>{count($maps//@title)}</td>
+          <td>Replace with <span class="xmlelement">title</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">copy-to</span></td>
+          <td>{count($maps//@copy-to)}</td>
+          <td>Replace with <span class="xmlelement">resourceid</span> in <span class="xmlelement">topicmeta</span> or with
+          a processor-defined equivalent.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">chunk</span></td>
+          <td>{count($maps//@chunk)}</td>
+          <td>Values: {$maps//@chunk ! string(.) => distinct-values() => sort() => string-join(', ')}
+          <p>Replace with "combine" or "split" as appropriate.</p></td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">topicset</span></td>
+          <td>{count($maps//topicset)}</td>
+          <td><span class="xmlelement">topicset</span> has been removed. 
+         </td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">topicsetref</span></td>
+          <td>{count($maps//topicsetref)}</td>
+          <td><span class="xmlelement">topicsetref</span> has been removed. 
+         </td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">anchor</span></td>
+          <td>{count($maps//anchor)}</td>
+          <td><span class="xmlelement">anchor</span> has been removed. 
+         </td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">anchorref</span></td>
+          <td>{count($maps//anchorref)}</td>
+          <td><span class="xmlelement">anchorref</span> has been removed. 
+         </td>
+        </tr>
+        <tr>
+          <td><span class="xmlelement">linktext</span></td>
+          <td>{count($maps//linktext)}</td>
+          <td>Replace with <span class="xmlelement">keytext</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">collectiontype</span> on <span class="xmlelement">reltable</span> and
+          <span class="xmlelement">relcolspec</span></td>
+          <td>{count($maps//reltable[@collectiontype ]|$maps//relcolspec[@collectiontype ])}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">keyref</span> on <span class="xmlelement">navref</span></td>
+          <td>{count($maps//navref[@keyref])}</td>
+          <td>Remove the attribute or replace with <span class="xmlatt">href</span>.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">locktitle</span> on <span class="xmlelement">topichead</span> and <span class="xmlelement">topicgroup</span></td>
+          <td>{count($maps//topichead[@locktitle]|$maps//topicgroup[@locktitle])}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">mapkeyref</span> on <span class="xmlelement">metadata</span></td>
+          <td>{count($maps//metdata[@mapkeyref])}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">print</span></td>
+          <td>{count($maps//@print)}</td>
+          <td>Replace with <span class="xmlatt">deliveryTarget</span> with appropriate values (i.e., "pdf").</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">query</span></td>
+          <td>{count($maps//@query)}</td>
+          <td>Remove the attribute.</td>
+        </tr>
+        <tr>
+          <td><span class="xmlatt">lockmeta</span></td>
+          <td>{count($maps//@lockmeta)}</td>
+          <td>Remove the attribute.</td>
         </tr>
       </tbody>
     </table>
