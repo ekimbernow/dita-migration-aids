@@ -81,131 +81,197 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
          <th>Notes</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
+      <tbody>{
+        let $count as xs:integer := count($topics//titlealts)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlelement">titlealts</span> in topics</td>
-          <td>{count($topics//titlealts)}</td>
+          <td>{$count}</td>
           <td><span class="xmlelement">titlealts</span> has been removed. 
           Move alternative titles into the topic prolog.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//hazardstatement[.//hazardsymbol])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlelement">hazardstatement</span> with with <span class="xmlelement">hazardsymbol</span></td>
-          <td>{count($topics//hazardstatement[.//hazardsymbol])}</td>
+          <td>{$count}</td>
           <td>Move <span class="xmlelement">hazardsymbol</span> into <span class="xmlelement">messagepanel</span> .</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//longquote[@href | @scope | @format])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlelement">longquote</span> with removed linking attributes</td>
-          <td>{count($topics//longquote[@href | @scope | @format])}</td>
+          <td>{$count}</td>
           <td>Remove <span class="xmlatt">href</span>, <span class="xmlatt">scope</span>, and <span class="xmlatt">format</span> attributes.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//index-base)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlelement">index-base</span></td>
-          <td>{count($topics//index-base)}</td>
+          <td>{$count}</td>
           <td>Remove <span class="xmlelement">index-base</span> elements.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//index-sort-as)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlelement">index-sort-as</span></td>
-          <td>{count($topics//index-sort-as)}</td>
+          <td>{$count}</td>
           <td>Replace <span class="xmlelement">index-sort-as</span> with <span class="xmlelement">sort-as</span>.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//@spectitle)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
           <td><span class="xmlatt">spectitle</span></td>
-          <td>{count($topics//@spectitle)}</td>
+          <td>{$count}</td>
           <td>Replace <span class="xmlatt">spectitle</span> with appropriate <span class="xmlatt">outputclass</span> value  .</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//stentry[@specentry])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">stentry</span> with <span class="xmlatt">specentry</span></td>
-          <td>{count($topics//stentry[@specentry])}</td>
+          <td>{$count}</td>
           <td>Replace <span class="xmlatt">specentry</span> with appropriate <span class="xmlatt">outputclass</span> value  .</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//substeps)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">substeps</span> elements</td>
-          <td>{count($topics//substeps)}</td>
+          <td>{$count}</td>
           <td>Replace <span class="xmlelement">substeps</span> with <span class="xmlelement">steps</span>.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//object[@declare | @classid | @classidkeyref | @codebase | @codebasekeyref | 
+                                     @archive | @archivekeyrefs | @standby])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">object</span> with removed object attributes</td>
-          <td>{count($topics//object[@declare | @classid | @classidkeyref | @codebase | @codebasekeyref | 
-                                     @archive | @archivekeyrefs | @standby])}</td>
+          <td>{$count}</td>
           <td>Remove the attributes.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//object/param[@type | @valuetype])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">param</span> with removed param attributes</td>
-          <td>{count($topics//object/param[@type | @valuetype])}</td>
+          <td>{$count}</td>
           <td>Remove the attributes.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//longquoteref)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">longquoteref</span></td>
-          <td>{count($topics//longquoteref)}</td>
+          <td>{$count}</td>
           <td>Replace with <span class="xmlelement">xref</span>.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//sectiondiv)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">sectiondiv</span></td>
-          <td>{count($topics//sectiondiv)}</td>
+          <td>{$count}</td>
           <td>Replace with <span class="xmlelement">div</span>.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//linktext)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">linktext</span></td>
-          <td>{count($topics//linktext)}</td>
+          <td>{$count}</td>
           <td>Replace with <span class="xmlelement">keytext</span>.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//boolean)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">boolean</span></td>
-          <td>{count($topics//boolean)}</td>
+          <td>{$count}</td>
           <td>Replace with appropriate text or other element.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//data-about)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">data-about</span></td>
-          <td>{count($topics//data-about)}</td>
+          <td>{$count}</td>
           <td>Remove element or replace with appropriate use of <span class="xmlelement">data</span></td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//indextermref)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">indextermref</span></td>
-          <td>{count($topics//indextermref)}</td>
+          <td>{$count}</td>
           <td>Remove element.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//itemgroup)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlelement">itemgroup</span></td>
-          <td>{count($topics//itemgroup)}</td>
+          <td>{$count}</td>
           <td>Split containing list into two lists.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//image[@alt])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">alt</span></td>
-          <td>{count($topics//image[@alt])}</td>
+          <td>{$count}</td>
           <td>Replace with <span class="xmlelement">alt</span> within <span class="xmlelement">image</span> or 
           <span class="xmlelement">keytext</span> within <span class="xmlelement">keydef</span> for the image&apos;s key.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//image[@longdescref])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">longdescref</span></td>
-          <td>{count($topics//image[@longdescref])}</td>
+          <td>{$count}</td>
           <td>Remove the attribute.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//*[@collectiontype eq 'tree'])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">collectiontype</span> of "tree"</td>
-          <td>{count($topics//*[@collectiontype eq 'tree'])}</td>
+          <td>{$count}</td>
           <td>Remove the attribute or select a different value.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//@print)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">print</span></td>
-          <td>{count($topics//@print)}</td>
+          <td>{$count}</td>
           <td>Replace with <span class="xmlatt">deliveryTarget</span> with appropriate values (i.e., "pdf").</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//@query)
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">query</span></td>
-          <td>{count($topics//@query)}</td>
+          <td>{$count}</td>
           <td>Remove the attribute.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//lq[@type])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">type</span> on  <span class="xmlelement">lq</span></td>
-          <td>{count($topics//lq[@type])}</td>
+          <td>{$count}</td>
           <td>Remove the attribute.</td>
-        </tr>
-        <tr>
+        </tr>,
+        let $count as xs:integer := count($topics//@role[. = ('sample', 'external')])
+        return
+        <tr class="{if ($count gt 0) then 'action-required' else 'no-hits'}">
+
           <td><span class="xmlatt">role</span> "sample" or "external"</td>
-          <td>{count($topics//@role[. = ('sample', 'external')])}</td>
+          <td>{$count}</td>
           <td>Remove the attribute or select a different role.</td>
         </tr>
-      </tbody>
+    }</tbody>
     </table>
     <h3>Map Migrations</h3>
     <table class="report-table">
