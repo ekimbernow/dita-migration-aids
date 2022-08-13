@@ -17,3 +17,41 @@ label:after {
   content: ':';
   margin-right: 4px;
 }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid purple;
+}
+
+.report-table thead th:nth-child(1) {
+  width: 20%;
+}
+
+.report-table thead th:nth-child(2) {
+  width: 30%;
+}
+
+thead {
+  font-weight: bold;
+  background-color: #FCFCFC;
+}
+
+th {
+  text-align: left;
+}
+
+tr {
+  border: 2px solid purple;
+}
+
+th, td {
+  padding: 10px;
+  border: 2px solid purple;
+}
+
+th {
+  font-weight: bold;
+  background-color: #FCFCFC;
+}

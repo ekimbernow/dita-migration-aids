@@ -33,10 +33,46 @@ function dm:ditaMigrationRoot(
         then dm:handleNoSelectedDatabase()
         else ()
       }</div>
+      <div>{
+        if (exists($selectedDatabase))
+        then dm:generateMigrationReport($selectedDatabase)
+        else <p>Select or create database.</p>
+      }</div>
     </body>
   </html>
 };
 
+(:~ 
+ : Generate migration analysis report
+ :)
+declare function dm:generateMigrationReport($database as xs:string) as node()* {
+  let $topics := migration:getTopics($database)
+  let $maps := migration:getMaps($database)
+  return
+  <div class="report-container">
+    <table class="report-table">
+      <thead>
+        <tr>
+         <th>Item</th>
+         <th>Value</th>
+         <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Total Maps</td>
+          <td>{count($maps)}</td>
+          <td>{$maps ! name(.) => distinct-values() => sort() => string-join(', ')}</td>
+        </tr>
+        <tr>
+          <td>Total Topics</td>
+          <td>{count($topics)}</td>
+          <td>{$topics ! name(.) => distinct-values() => sort() => string-join(', ')}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+};
 
 (:~ 
  : Handle the case where no database has been selected
