@@ -75,3 +75,7 @@ span.xmlatt {
 span.xmlatt:before {
   content: '@';
 }
+
+.action-required {
+  background-color: yellow;
+}
