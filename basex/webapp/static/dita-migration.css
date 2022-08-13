@@ -1,0 +1,19 @@
+/* CSS for the DITA migration application */
+
+:root {
+  font-family: Verdana, sans-serif;
+  font-size: larger;
+}
+
+form {
+  width: fit-content;
+}
+
+label {
+  font-weight: bold;
+}
+
+label:after {
+  content: ':';
+  margin-right: 4px;
+}

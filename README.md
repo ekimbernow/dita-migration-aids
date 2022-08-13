@@ -46,3 +46,13 @@ To use the BaseX migration analysis application perform the following steps:
 1. Navigate to `http://localhost:nnnn/dita-migration` where `nnnn` is the port number for the BaseX web server (8984 for BaseX 9 and earlier, 8080 for BaseX 10 and newer).
 1. Follow the instructions for creating a BaseX database with your DITA content to be analyzed.
 1. Follow the instructions for generating a migration analysis report.
+
+BaseX can parse documents using an XML catalog to resolve references to DTDs. However, BaseX as of version 10.0 does not implement grammar caching for parsing, so loading large amounts of DITA content can take a long time when using the DTDs because the DTDs get reloaded for each topic and map.
+
+You can load DITA content much more quickly by turning off DTD parsing (for example, it takes about two minutes to load the 40,000 topics of the ServiceNow Platform documenation with DTD parsing turned off) but it means that there will be no `@class` attributes in the loaded XML, so normal class-based element selection will not work.
+
+In practice this is not a problem, especially if you do not have any local specializations.
+
+If you do have specializations you can simply update the XQuery code to include your specialized element types where appropriate.
+
+The BaseX DITA migration analysis XQuery has been written to not use `@class`-based selection so that it does not require DTD parsing.
