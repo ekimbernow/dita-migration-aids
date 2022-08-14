@@ -5,6 +5,26 @@
   font-size: larger;
 }
 
+article {
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+div.footer
+{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  border-top: 1pt solid black;
+  margin: 4px;
+  padding: 4px;
+  font-size: xx-small;
+  color: grey; 
+  max-height: 2em;
+  width: 100%;
+  text-align: right;
+}
+
 form {
   width: fit-content;
 }
@@ -25,12 +45,42 @@ table {
   border: 3px solid purple;
 }
 
-.report-table thead th:nth-child(1) {
-  width: 20%;
+.report-table thead th:nth-child(1)
+{
+  width: max-content;
+}
+
+.migration-detail-table thead tr th:nth-child(1)
+{
+  width: 50%;
+}
+
+.migration-detail-table tbody tr td:nth-child(1) pre
+{
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .report-table thead th:nth-child(2) {
-  width: 30%;
+  width: 20em;
+}
+
+.report-table tbody td:nth-child(3) {
+  width: 10em;
+}
+
+.report-table td {
+  vertical-align: top;
+}
+
+.migration-detail-table thead tr th:nth-child(2)
+{
+  width: 10em;
+}
+
+
+.report-table thead th:nth-child(3) {
+  width: min-content;
 }
 
 thead {

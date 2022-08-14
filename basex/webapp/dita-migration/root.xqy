@@ -28,16 +28,87 @@ function dm:ditaMigrationRoot(
     </head>
     <body>
       <h1>DITA Migration Analysis Tool</h1>
-      <div>{
-        if (empty($selectedDatabase))
-        then dm:handleNoSelectedDatabase()
-        else ()
-      }</div>
-      <div>{
-        if (exists($selectedDatabase))
-        then dm:generateMigrationReport($selectedDatabase)
-        else <p>Select or create database.</p>
-      }</div>
+      <article>
+        <div>{
+          if (empty($selectedDatabase))
+          then dm:handleNoSelectedDatabase()
+          else ()
+        }</div>
+        <div>{
+          if (exists($selectedDatabase))
+          then dm:generateMigrationReport($selectedDatabase)
+          else <p>Select or create database.</p>
+        }</div>
+      </article>
+      {dm:makePageFooter()}
+    </body>
+  </html>
+};
+
+declare 
+  %rest:GET
+  %rest:path('/dita-migration/migration-detail')
+  %rest:query-param('database', '{$database}')
+  %rest:query-param('item-id', '{$item-id}')
+  %output:method('html')
+function dm:ditaMigrationDetail(
+  $database as xs:string,
+  $item-id as xs:string
+) as element(html) {
+  let $migration-item as element(migration-item)? := $migration:migrationData/migration-item[@id eq $item-id]
+  return
+  if (exists($migration-item))
+  then
+  let $context as element()* := (migration:getMaps($database) | migration:getTopics($database))
+  let $items := migration:evaluateExpression($context, $migration-item/xpath ! string(.))
+  return
+  <html>
+    <head>
+      <title>Migration Analysis Details: {$migration-item/title/node()}</title>
+      <link href="/static/dita-migration.css" type="text/css" rel="stylesheet"/>
+    </head>
+    <body> 
+      <h1>Migration Analysis Details: {$migration-item/title/node()}</h1>
+      <article>
+        <p>{$migration-item/description/node()}</p>
+        <p>{$migration-item/migrate-to/node()}</p>
+        <p>{count($items)} instances found.</p>
+        <table class="report-table migration-detail-table">
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Document Element</th>
+              <th>Containing Document</th>
+            </tr>
+          </thead>
+          <tbody>{
+            for $item in $items
+            let $docPath as xs:string := db:path($item)
+            order by $docPath
+            return 
+            <tr>
+              <td><pre>{serialize($item)}</pre></td>
+              <td>{name(root($item)/*)}</td>
+              <td>{$docPath}</td>
+            </tr>
+          }</tbody>
+        </table>
+      </article>
+      {dm:makePageFooter()}
+    </body>
+  </html>
+  else 
+  <html>
+    <head>
+      <title>Migration Analysis Details</title>
+      <link href="/static/dita-migration.css" type="text/css" rel="stylesheet"/>
+    </head>
+    <body>
+      <article>
+        <h1>Migration Analysis Details</h1>
+        <p>No migration data item found for id "{$item-id}"</p>
+      </article>
+      {dm:makePageFooter()}
     </body>
   </html>
 };
@@ -78,7 +149,7 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
       <thead>
         <tr>
          <th>Item</th>
-         <th>Occurences</th>
+         <th colspan="2">Occurences</th>
          <th>Notes</th>
         </tr>
       </thead>
@@ -102,6 +173,16 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
             <tr class="{if ($count gt 0) then 'action-required' else 'no-action-required'}">
               <td>{$migration-item/title/node()}</td>
               <td>{$count}</td>
+              <td>{
+                if ($count gt 0)
+                then 
+                  <button 
+                    form="detail-form"
+                    formtarget="migration-details"
+                    name="item-id" 
+                    value="{$migration-item/@id}">Details</button>
+                else ()
+              }</td>
               <td>{$migration-item/migrate-to/node()}</td>
             </tr>
         else ()
@@ -112,7 +193,7 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
       <thead>
         <tr>
          <th>Item</th>
-         <th>Occurences</th>
+         <th colspan="2">Occurences</th>
          <th>Notes</th>
         </tr>
       </thead>
@@ -136,11 +217,24 @@ declare function dm:generateMigrationReport($database as xs:string) as node()* {
             <tr class="{if ($count gt 0) then 'action-required' else 'no-action-required'}">
               <td>{$migration-item/title/node()}</td>
               <td>{$count}</td>
+              <td>{
+                if ($count gt 0)
+                then 
+                  <button 
+                    form="detail-form"
+                    formtarget="migration-details"
+                    name="item-id" 
+                    value="{$migration-item/@id}">Details</button>
+                else ()
+              }</td>
               <td>{$migration-item/migrate-to/node()}</td>
             </tr>
         else ()
       }</tbody>
     </table>
+    <form id="detail-form" action="/dita-migration/migration-detail">
+      <input type="hidden" name="database" value="{$database}"/>
+    </form>
   </div>
 };
 
@@ -196,4 +290,11 @@ declare function dm:handleNoSelectedDatabase() as node()* {
     </ul>
   </div>
 
+};
+
+(:~ 
+ : Constructs the HTML footer for each page
+ :)
+declare function dm:makePageFooter() as node()* {
+  <div class="footer">DITA Migration Analysis Tool <span class="version">Version { migration:getVersionString()}</span></div>
 };

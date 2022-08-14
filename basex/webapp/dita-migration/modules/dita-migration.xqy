@@ -9,6 +9,23 @@ module namespace migration="http://oasis-open.org/dita/modules/dita-migration";
 
 declare variable $migration:migrationData as element()? :=
    doc('../resource/migration-analysis-data.xml')/*;
+   
+declare variable $migration:version as map(*) := 
+  map{
+    'major' : 0,
+    'minor' : 1,
+    'patch' : 0,
+    'build' : (),
+    'prerelease' : ()
+  };
+  
+declare function migration:getVersionString() as xs:string {
+  string-join((
+    $migration:version?major,
+    $migration:version?minor,
+    $migration:version?patch
+  ), '.')
+}; 
 
 (:~ 
  : Get all the topics in the specified database
