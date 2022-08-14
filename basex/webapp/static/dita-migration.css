@@ -58,7 +58,8 @@ table {
 .migration-detail-table tbody tr td:nth-child(1) pre
 {
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
+  max-height: 40em;
 }
 
 .report-table thead th:nth-child(2) {
