@@ -36,7 +36,7 @@
     <xpath>//index-base</xpath>
     <migrate-to>Remove <span class="xmlelement">index-base</span> elements.</migrate-to>
   </migration-item>
-  <migration-item id="">
+  <migration-item id="index-sort-as">
     <title>
       <span class="xmlelement">index-sort-as</span>
     </title>

@@ -17,7 +17,9 @@
   
   <define name="migration-item">
     <element name="migration-item">
-      <attribute name="id"/>        
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>        
       <group>
         <interleave>
           <ref name="title"/>
