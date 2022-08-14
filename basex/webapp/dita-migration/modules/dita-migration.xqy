@@ -40,30 +40,32 @@ declare function migration:constructMigrationAnalysisReport($database as xs:stri
   let $items as map(*) := map:merge(
     for $migrationItem as element(migration-item) in $migration:migrationData/migration-item
       let $appliesTo as xs:string* := $migrationItem/applies-to ! tokenize(., '\s+')
-      for $contextType as xs:string in $appliesTo
-        let $context as item()* :=
-         (if ($contextType = ('maps')) 
-          then $maps 
-          else if ($contextType = ('topics')) 
-          then $topics else 
-          ()
-         )
-        let $expression as xs:string := $migrationItem/xpath ! string(.)
-        let $items as item()* := 
-           try {
-            migration:evaluateExpression($context, $expression)    
-          } catch * {
-            prof:dump(' migration:constructMigrationAnalysisReport(): ' || $err:description)
-          }
-        return map{
-          string($migrationItem/@id) :
-          map {
-            'items' : $items,
-            'applies-to' : $contextType,
-            'migration-item' : $migrationItem
-          }
-        },
-        map{'duplicates' : 'combine'}      
+      return map:merge(
+        for $contextType as xs:string in $appliesTo
+          let $context as item()* :=
+           (if ($contextType = ('maps')) 
+            then $maps 
+            else if ($contextType = ('topics')) 
+            then $topics else 
+            ()
+           )
+          let $expression as xs:string := $migrationItem/xpath ! string(.)
+          let $items as item()* := 
+             try {
+              migration:evaluateExpression($context, $expression)    
+            } catch * {
+              prof:dump(' migration:constructMigrationAnalysisReport(): ' || $err:description)
+            }
+          return map{
+            string($migrationItem/@id) :
+            map {
+              'items' : $items,
+              'applies-to' : $contextType,
+              'migration-item' : $migrationItem
+            }
+          },
+        map{'duplicates' : 'combine'}   
+      )   
     )
   
   let $result := map:merge(
