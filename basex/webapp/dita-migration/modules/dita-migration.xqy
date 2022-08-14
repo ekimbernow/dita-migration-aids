@@ -37,17 +37,22 @@ declare function migration:constructMigrationAnalysisReport($database as xs:stri
   as map(*) {
   let $maps as element()* := migration:getMaps($database)
   let $topics as element()* := migration:getTopics($database)
-  let $debug := (prof:dump('migration data'), prof:dump($migration:migrationData))
+  (: let $debug := (prof:dump('migration data'), prof:dump($migration:migrationData)) :)
   let $items as map(*) := map:merge(
     for $migrationItem as element() in $migration:migrationData/*
-      let $debug := (prof:dump('migrationitem'), prof:dump($migrationItem))
+      (: let $debug := (prof:dump('migrationitem'), prof:dump($migrationItem)) :)
       let $appliesTo as xs:string* := $migrationItem/applies-to ! tokenize(., '\s+')
       let $context as item()* :=
        (if ($appliesTo = ('maps')) then $maps else (),
         if ($appliesTo = ('topics')) then $topics else ()
        )
       let $expression as xs:string := $migrationItem/xpath ! string(.)
-      let $items as item()* := migration:evaluateExpression($context, $expression)    
+      let $items as item()* := 
+         try {
+          migration:evaluateExpression($context, $expression)    
+        } catch * {
+          prof:dump(' migration:constructMigrationAnalysisReport(): ' || $err:description)
+        }
       return map{
         string($migrationItem/@id) :
         map {
@@ -74,7 +79,7 @@ declare function migration:constructMigrationAnalysisReport($database as xs:stri
 declare function migration:evaluateExpression(
   $context as node()+,
   $expression as xs:string) as item()* {
-  let $debug := prof:dump('migration:evaluateExpression(): Expression: "' || $expression || '"')
+  (: let $debug := prof:dump('migration:evaluateExpression(): Expression: "' || $expression || '"') :)
   
   let $query as xs:string :=
   ``[

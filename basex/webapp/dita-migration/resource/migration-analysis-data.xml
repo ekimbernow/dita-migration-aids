@@ -52,7 +52,7 @@
     </title>
     <description><span class="xmlatt">spectitle</span> attribute removed.</description>
     <applies-to>topics</applies-to>
-    <xpath>//@spectitle</xpath>
+    <xpath>//@spectitle/..</xpath>
     <migrate-to>Replace <span class="xmlatt">spectitle</span> with appropriate <span class="xmlatt"
       >outputclass</span> value.</migrate-to>
   </migration-item>
@@ -79,7 +79,7 @@
     <description>Attributes removed from <span class="xmlelement">object</span> element.</description>
     <applies-to>topics</applies-to>
     <xpath>//object[@declare | @classid | @classidkeyref | @codebase | @codebasekeyref | @archive |
-      @archivekeyrefs | @standby])</xpath>
+      @archivekeyrefs | @standby]</xpath>
     <migrate-to>Remove the attributes.</migrate-to>
   </migration-item>
   <migration-item id="param-atts">
@@ -165,7 +165,7 @@
     <title><span class="xmlatt">print</span></title>
     <description><span class="xmlatt">print</span> attribute removed.</description>
     <applies-to>topics maps</applies-to>
-    <xpath>//@print</xpath>
+    <xpath>//@print/..</xpath>
     <migrate-to>Replace with <span class="xmlatt">deliveryTarget</span> with appropriate values (i.e.,
       "pdf").</migrate-to>
   </migration-item>
@@ -173,7 +173,7 @@
     <title><span class="xmlatt">query</span></title>
     <description><span class="xmlatt">query</span> attribute removed</description>
     <applies-to>topics maps</applies-to>
-    <xpath>//@query</xpath>
+    <xpath>//@query/..</xpath>
     <migrate-to>Remove the attribute.</migrate-to>
   </migration-item>
   <migration-item id="lq-type">
@@ -187,7 +187,7 @@
     <title><span class="xmlatt">role</span> "sample" or "external"</title>
     <description><span class="xmlatt">role</span> "sample", "external" values removed</description>
     <applies-to>topics</applies-to>
-    <xpath>//@role[. = ('sample', 'external')]</xpath>
+    <xpath>//@role[. = ('sample', 'external')]/..</xpath>
     <migrate-to>Remove the attribute or select a different role.</migrate-to>
   </migration-item>
   <migration-item id="titlealts">
@@ -202,7 +202,7 @@
     <title><span class="xmlatt">navtitle</span></title>
     <description><span class="xmlatt">navtitle</span> attribute removed.</description>
     <applies-to>maps</applies-to>
-    <xpath>//@navtitle</xpath>
+    <xpath>//@navtitle/..</xpath>
     <migrate-to>Replace with <span class="xmlelement">navtitle</span> in <span class="xmlelement"
       >topicmeta</span>.</migrate-to>
   </migration-item>
@@ -210,7 +210,7 @@
     <title><span class="xmlatt">title</span></title>
     <description><span class="xmlatt">title</span> attribute removed.</description>
     <applies-to>maps</applies-to>
-    <xpath>//@title</xpath>
+    <xpath>//@title/..</xpath>
     <migrate-to>Replace with <span class="xmlelement">title</span>.</migrate-to>
   </migration-item>
   <migration-item id="copy-to">
@@ -226,7 +226,7 @@
     <title><span class="xmlatt">chunk</span></title>
     <description><span class="xmlatt">chunk</span> values changed to "combine" and "split".</description>
     <applies-to>maps</applies-to>
-    <xpath>//@chunk</xpath>
+    <xpath>//@chunk/..</xpath>
     <migrate-to>Replace with "combine" or "split" as appropriate.</migrate-to>
   </migration-item>
   <migration-item id="topicset">
@@ -263,7 +263,7 @@
     <description><span class="xmlatt">collectiontype</span> on <span class="xmlelement">reltable</span> and
       <span class="xmlelement">relcolspec</span> removed.</description>
     <applies-to>maps</applies-to>
-    <xpath>//reltable[@collectiontype ]|$maps//relcolspec[@collectiontype ]</xpath>
+    <xpath>//(reltable[@collectiontype ]|relcolspec[@collectiontype ])</xpath>
     <migrate-to>Remove the attribute.</migrate-to>
   </migration-item>
   <migration-item id="navref-keyref">
@@ -279,7 +279,7 @@
     <description><span class="xmlatt">locktitle</span> on <span class="xmlelement">topichead</span> and <span
       class="xmlelement">topicgroup</span> has been removed.</description>
     <applies-to>maps</applies-to>
-    <xpath>//topichead[@locktitle]|$maps//topicgroup[@locktitle]</xpath>
+    <xpath>//(topichead[@locktitle]|topicgroup[@locktitle])</xpath>
     <migrate-to>Remove the attribute.</migrate-to>
   </migration-item>
   <migration-item id="mapkeyref">
@@ -293,7 +293,7 @@
     <title><span class="xmlatt">lockmeta</span></title>
     <description><span class="xmlatt">lockmeta</span> attribute has been removed.</description>
     <applies-to>maps</applies-to>
-    <xpath>//@lockmeta</xpath>
+    <xpath>//@lockmeta/..</xpath>
     <migrate-to>Remove the attribute.</migrate-to>
   </migration-item>
 </migration-analysis-data>
