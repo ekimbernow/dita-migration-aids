@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<migration-analysis-data>
+  <migration-item id="copy-to">
+    <title>@copy-to to resourceid</title>
+    <description>@copy-to is removed. Replaced by use of &lt;resourceid&gt; or
+    processor-specific anchor determination facility.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//*[@copy-to]</xpath>
+    <migrate-to>&lt;resourceid&lt; in &lt;topicmeta&lt; of topic reference.</migrate-to>
+  </migration-item>
+</migration-analysis-data>
