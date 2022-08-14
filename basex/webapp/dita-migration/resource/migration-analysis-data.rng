@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar 
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="migration-analysis-data"/>
+  </start>
+  
+  <define name="migration-analysis-data">
+    <element name="migration-analysis-data">
+      <zeroOrMore>
+        <ref name="migration-item"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  
+  <define name="migration-item">
+    <element name="migration-item">
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>        
+      <group>
+        <interleave>
+          <ref name="title"/>
+          <ref name="description"/>
+          <ref name="xpath"/>
+          <ref name="applies-to"/>
+          <ref name="migrate-to"/>
+        </interleave>
+      </group>
+    </element>
+  </define>
+  
+  <define name="title">
+    <element name="title">
+      <ref name="inline.content"/>
+    </element>
+  </define>
+  <define name="description">
+    <element name="description">
+      <ref name="inline.content"/>
+    </element>
+  </define>
+  <define name="xpath">
+    <element name="xpath">
+      <ref name="inline.content"/>
+    </element>
+  </define>
+  <define name="applies-to">
+    <element name="applies-to">
+      <ref name="inline.content"/>
+    </element>
+  </define>
+  <define name="migrate-to">
+    <element name="migrate-to">
+      <ref name="inline.content"/>
+    </element>
+  </define>
+  
+  <define name="inline.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="span"/>        
+      </choice>
+    </zeroOrMore>    
+  </define>
+  
+  <define name="span">
+    <element name="span">
+      <optional>
+        <attribute name="class"/>
+      </optional>
+      <ref name="inline.content"/>
+    </element>
+  </define>
+</grammar>

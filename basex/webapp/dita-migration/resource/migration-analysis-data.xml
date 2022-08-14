@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="./migration-analysis-data.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<migration-analysis-data>
+  <migration-item id="titlealts-topics">
+    <title><span class="xmlelement">titlealts</span> in topics</title>
+    <description><span class="xmlelement">titlealts</span> has been removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//titlealts</xpath>
+    <migrate-to>Move alternative titles into the topic prolog.</migrate-to>
+  </migration-item>
+  <migration-item id="hazardsymbol">
+    <title><span class="xmlelement">hazardstatement</span> with with <span class="xmlelement"
+      >hazardsymbol</span></title>
+    <description><span class="xmlelement">hazardsymbol</span> now child of <span class="xmlelement"
+      >messagepanel</span>.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//hazardstatement[.//hazardsymbol]</xpath>
+    <migrate-to>Move <span class="xmlelement">hazardsymbol</span> into <span class="xmlelement"
+      >messagepanel</span> .</migrate-to>
+  </migration-item>
+  <migration-item id="longquote-no-link-atts">
+    <title><span class="xmlelement">longquote</span> with removed linking attributes</title>
+    <description>Linking attributes <span class="xmlatt">href</span>, <span class="xmlatt">scope</span>, and <span
+      class="xmlatt">format</span> removed from <span class="xmlelement">longquote</span>.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//longquote[@href | @scope | @format]</xpath>
+    <migrate-to>Remove <span class="xmlatt">href</span>, <span class="xmlatt">scope</span>, and <span
+      class="xmlatt">format</span> attributes.</migrate-to>
+  </migration-item>
+  <migration-item id="index-base">
+    <title>
+      <span class="xmlelement">index-base</span>
+    </title>
+    <description><span class="xmlelement">index-base</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//index-base</xpath>
+    <migrate-to>Remove <span class="xmlelement">index-base</span> elements.</migrate-to>
+  </migration-item>
+  <migration-item id="index-sort-as">
+    <title>
+      <span class="xmlelement">index-sort-as</span>
+    </title>
+    <description><span class="xmlelement">index-sort-as</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//index-sort-as</xpath>
+    <migrate-to>Replace <span class="xmlelement">index-sort-as</span> with <span class="xmlelement"
+      >sort-as</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="spectitle">
+    <title>
+      <span class="xmlatt">spectitle</span>
+    </title>
+    <description><span class="xmlatt">spectitle</span> attribute removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//@spectitle/..</xpath>
+    <migrate-to>Replace <span class="xmlatt">spectitle</span> with appropriate <span class="xmlatt"
+      >outputclass</span> value.</migrate-to>
+  </migration-item>
+  <migration-item id="specentry">
+    <title><span class="xmlelement">stentry</span> with <span class="xmlatt">specentry</span></title>
+    <description><span class="xmlatt">specentry</span> attribute removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//stentry[@specentry]</xpath>
+    <migrate-to>Replace <span class="xmlatt">specentry</span> with appropriate <span class="xmlatt"
+      >outputclass</span> value.</migrate-to>
+  </migration-item>
+  <migration-item id="substeps">
+    <title><span class="xmlelement">substeps</span> elements</title>
+    <description><span class="xmlelement">substeps</span> removed, <span class="xmlelement"
+      >steps</span> can nest in <span class="xmlelement"
+        >steps</span>.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//substeps</xpath>
+    <migrate-to>Replace <span class="xmlelement">substeps</span> with <span class="xmlelement"
+      >steps</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="object-atts">
+    <title><span class="xmlelement">object</span> with removed object attributes</title>
+    <description>Attributes removed from <span class="xmlelement">object</span> element.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//object[@declare | @classid | @classidkeyref | @codebase | @codebasekeyref | @archive |
+      @archivekeyrefs | @standby]</xpath>
+    <migrate-to>Remove the attributes.</migrate-to>
+  </migration-item>
+  <migration-item id="param-atts">
+    <title><span class="xmlelement">param</span> with removed param attributes</title>
+    <description>Attributes removed from <span class="xmlelement">param</span> element.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//object/param[@type | @valuetype]</xpath>
+    <migrate-to>Remove the attributes.</migrate-to>
+  </migration-item>
+  <migration-item id="longquoteref">
+    <title><span class="xmlelement">longquoteref</span></title>
+    <description><span class="xmlelement">longquoteref</span> element removed</description>
+    <applies-to>topics</applies-to>
+    <xpath>//longquoteref</xpath>
+    <migrate-to>Replace with <span class="xmlelement">xref</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="sectiondiv">
+    <title><span class="xmlelement">sectiondiv</span></title>
+    <description><span class="xmlelement">sectiondiv</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//sectiondiv</xpath>
+    <migrate-to>Replace with <span class="xmlelement">div</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="linktext">
+    <title><span class="xmlelement">linktext</span></title>
+    <description><span class="xmlelement">linktext</span> becomes <span class="xmlelement">keytext</span></description>
+    <applies-to>topics maps</applies-to>
+    <xpath>//linktext</xpath>
+    <migrate-to>Replace with <span class="xmlelement">keytext</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="boolean">
+    <title><span class="xmlelement">boolean</span></title>
+    <description><span class="xmlelement">boolean</span> removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//boolean</xpath>
+    <migrate-to>Replace with appropriate text or other element.</migrate-to>
+  </migration-item>
+  <migration-item id="data-about">
+    <title><span class="xmlelement">data-about</span></title>
+    <description><span class="xmlelement">data-about</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//data-about</xpath>
+    <migrate-to>Remove element or replace with appropriate use of <span class="xmlelement">data</span></migrate-to>
+  </migration-item>
+  <migration-item id="indextermref">
+    <title><span class="xmlelement">indextermref</span></title>
+    <description><span class="xmlelement">indextermref</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//indextermref</xpath>
+    <migrate-to>Remove element.</migrate-to>
+  </migration-item>
+  <migration-item id="itemgroup">
+    <title><span class="xmlelement">itemgroup</span></title>
+    <description><span class="xmlelement">itemgroup</span> element removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//itemgroup</xpath>
+    <migrate-to>Split containing list into two lists.</migrate-to>
+  </migration-item>
+  <migration-item id="image-alt">
+    <title><span class="xmlatt">alt</span></title>
+    <description><span class="xmlatt">alt</span> removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//image[@alt]</xpath>
+    <migrate-to>Replace with <span class="xmlelement">alt</span> within <span class="xmlelement"
+      >image</span> or <span class="xmlelement">keytext</span> within <span class="xmlelement"
+      >keydef</span> for the image&apos;s key.</migrate-to>
+  </migration-item>
+  <migration-item id="image-longdescref">
+    <title><span class="xmlatt">longdescref</span></title>
+    <description><span class="xmlatt">longdescref</span> attribute removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//image[@longdescref]</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="collectiontype-tree">
+    <title><span class="xmlatt">collectiontype</span> of "tree"</title>
+    <description><span class="xmlatt">collectiontype</span> of "tree" removed.</description>
+    <applies-to>topics</applies-to>
+    <xpath>//*[@collectiontype eq 'tree']</xpath>
+    <migrate-to>Remove the attribute or select a different value.</migrate-to>
+  </migration-item>
+  <migration-item id="print-att">
+    <title><span class="xmlatt">print</span></title>
+    <description><span class="xmlatt">print</span> attribute removed.</description>
+    <applies-to>topics maps</applies-to>
+    <xpath>//@print/..</xpath>
+    <migrate-to>Replace with <span class="xmlatt">deliveryTarget</span> with appropriate values (i.e.,
+      "pdf").</migrate-to>
+  </migration-item>
+  <migration-item id="query-att">
+    <title><span class="xmlatt">query</span></title>
+    <description><span class="xmlatt">query</span> attribute removed</description>
+    <applies-to>topics maps</applies-to>
+    <xpath>//@query/..</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="lq-type">
+    <title><span class="xmlatt">type</span> on <span class="xmlelement">lq</span></title>
+    <description><span class="xmlatt">type</span> on <span class="xmlelement">lq</span> removed</description>
+    <applies-to>topics</applies-to>
+    <xpath>//lq[@type]</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="role-att">
+    <title><span class="xmlatt">role</span> "sample" or "external"</title>
+    <description><span class="xmlatt">role</span> "sample", "external" values removed</description>
+    <applies-to>topics</applies-to>
+    <xpath>//@role[. = ('sample', 'external')]/..</xpath>
+    <migrate-to>Remove the attribute or select a different role.</migrate-to>
+  </migration-item>
+  <migration-item id="titlealts">
+    <title><span class="xmlelement">titlealts</span></title>
+    <description><span class="xmlelement">titlealts</span> removed, replaced by alternative titles domain.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//titlealts</xpath>
+    <migrate-to><span class="xmlelement">titlealts</span> has been removed. Move alternative titles into
+      <span class="xmlelement">topicmeta</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="navtitle-att">
+    <title><span class="xmlatt">navtitle</span></title>
+    <description><span class="xmlatt">navtitle</span> attribute removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//@navtitle/..</xpath>
+    <migrate-to>Replace with <span class="xmlelement">navtitle</span> in <span class="xmlelement"
+      >topicmeta</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="title-att">
+    <title><span class="xmlatt">title</span></title>
+    <description><span class="xmlatt">title</span> attribute removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//@title/..</xpath>
+    <migrate-to>Replace with <span class="xmlelement">title</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="copy-to">
+    <title><span class="xmlatt">copy-to</span></title>
+    <description><span class="xmlatt">copy-to</span> is removed. Replaced by use of <span class="xmlelement">resource-id</span> or
+      processor-specific anchor determination facility.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//*[@copy-to]</xpath>    
+    <migrate-to>Replace with <span class="xmlelement">resourceid</span> in <span class="xmlelement"
+      >topicmeta</span> or with a processor-defined equivalent.</migrate-to>
+  </migration-item>
+  <migration-item id="chunk-att">
+    <title><span class="xmlatt">chunk</span></title>
+    <description><span class="xmlatt">chunk</span> values changed to "combine" and "split".</description>
+    <applies-to>maps</applies-to>
+    <xpath>//@chunk/..</xpath>
+    <migrate-to>Replace with "combine" or "split" as appropriate.</migrate-to>
+  </migration-item>
+  <migration-item id="topicset">
+    <title><span class="xmlelement">topicset</span></title>
+    <description><span class="xmlelement">topicset</span> element removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//topicset</xpath>
+    <migrate-to>Remove <span class="xmlelement">topicset</span> element or replace with appropriate map structure.</migrate-to>
+  </migration-item>
+  <migration-item id="topicsetref">
+    <title><span class="xmlelement">topicsetref</span></title>
+    <description><span class="xmlelement">topicsetref</span> has been removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//topicsetref</xpath>
+    <migrate-to>Remove <span class="xmlelement">topicsetref</span> element or replace with appropriate map structure.</migrate-to>
+  </migration-item>
+  <migration-item id="anchor">
+    <title><span class="xmlelement">anchor</span></title>
+    <description><span class="xmlelement">anchor</span> element removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//anchor</xpath>
+    <migrate-to>Remove <span class="xmlelement">anchor</span> element or replace with appropriate map structure.</migrate-to>
+  </migration-item>
+  <migration-item id="anchorref">
+    <title><span class="xmlelement">anchorref</span></title>
+    <description><span class="xmlelement">anchorref</span> element removed</description>
+    <applies-to>maps</applies-to>
+    <xpath>//anchorref</xpath>
+    <migrate-to>Remove <span class="xmlelement">anchorref</span> element or replace with appropriate map structure.</migrate-to>
+  </migration-item>
+  <migration-item id="collectiontype-reltable">
+    <title><span class="xmlatt">collectiontype</span> on <span class="xmlelement">reltable</span> and
+      <span class="xmlelement">relcolspec</span></title>
+    <description><span class="xmlatt">collectiontype</span> on <span class="xmlelement">reltable</span> and
+      <span class="xmlelement">relcolspec</span> removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//(reltable[@collectiontype ]|relcolspec[@collectiontype ])</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="navref-keyref">
+    <title><span class="xmlatt">keyref</span> on <span class="xmlelement">navref</span></title>
+    <description><span class="xmlatt">keyref</span> on <span class="xmlelement">navref</span> has been removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//navref[@keyref]</xpath>
+    <migrate-to>Remove the attribute or replace with <span class="xmlatt">href</span>.</migrate-to>
+  </migration-item>
+  <migration-item id="locktitle-topichead-topicgroup">
+    <title><span class="xmlatt">locktitle</span> on <span class="xmlelement">topichead</span> and <span
+      class="xmlelement">topicgroup</span></title>
+    <description><span class="xmlatt">locktitle</span> on <span class="xmlelement">topichead</span> and <span
+      class="xmlelement">topicgroup</span> has been removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//(topichead[@locktitle]|topicgroup[@locktitle])</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="mapkeyref">
+    <title><span class="xmlatt">mapkeyref</span> on <span class="xmlelement">metadata</span></title>
+    <description><span class="xmlatt">mapkeyref</span> attribute on <span class="xmlelement">metadata</span> has been removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//metdata[@mapkeyref]</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+  <migration-item id="lockmeta">
+    <title><span class="xmlatt">lockmeta</span></title>
+    <description><span class="xmlatt">lockmeta</span> attribute has been removed.</description>
+    <applies-to>maps</applies-to>
+    <xpath>//@lockmeta/..</xpath>
+    <migrate-to>Remove the attribute.</migrate-to>
+  </migration-item>
+</migration-analysis-data>
