@@ -42,6 +42,7 @@ To use the BaseX migration analysis application perform the following steps:
 
 1. Download the BaseX Zip distribution (macOS and linux) or Windows installer (Windows): https://basex.org/download/
 1. Copy the `basex/webapp/dita-migration` directory into the BaseX `webapp` directory
+1. Copy the `basex/webapp/static` directory into the BaseX `webapp` directory (you're adding the `dita-migration.css` file to the existing files).
 1. Start the BaseX http server per the BaseX documentation (starting version 10 you need to set the admin password when you start the server for the first time: `basexhttp -c PASSWORD` where `PASSWORD` is the literal string `PASSWORD`, meaning the `PASSWORD` command.
 1. Navigate to `http://localhost:nnnn/dita-migration` where `nnnn` is the port number for the BaseX web server (8984 for BaseX 9 and earlier, 8080 for BaseX 10 and newer).
 1. Follow the instructions for creating a BaseX database with your DITA content to be analyzed.
